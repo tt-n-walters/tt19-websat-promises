@@ -1,14 +1,9 @@
-const fs = require("fs")
+const fs = require("fs").promises
 
-function writeFileSlow() {
-    setTimeout(function() {
-        fs.writeFile("test2.txt", "", exit)
-    }, 1000)
-}
 
-fs.writeFile("test1.txt", "", exit)
-writeFileSlow()
+let promise1 = fs.writeFile("test1.txt", "")
+let promise2 = fs.writeFile("test2.txt", "")
 
-function exit() {
-    process.exit()
-}
+let allPromises = [promise1, promise2]
+
+Promise.all(allPromises).then(process.exit)
